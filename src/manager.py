@@ -2,5 +2,9 @@ from data_analyzer import DataAnalyzer
 
 class Manager:
     def __init__(self,data_analyzer):
-        self.dataAnalyzer = DataAnalyzer(data_analyzer)
-        self.dataAnalyzer.print_data()
+        self.da = DataAnalyzer(data_analyzer)
+        self.da.tweets_count_per_category()
+        self.da.print_result_dict()
+
+
+        #self.dataAnalyzer.print_data()
