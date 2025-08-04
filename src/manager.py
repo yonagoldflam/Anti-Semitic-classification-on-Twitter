@@ -17,6 +17,7 @@ class Manager:
 
     def cleaning_data(self):
         self.clean_data.save_relevant_columns()
+        self.clean_data.removing_punctuation_marks()
 
 
 

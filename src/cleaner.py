@@ -2,6 +2,16 @@ class Cleaner:
     def __init__(self,data_frame):
         self.df = data_frame
 
+    # Choosing the relevant columns with us are the text and the classification as anti-Semitic
     def save_relevant_columns(self):
         self.df = self.df[['Text','Biased']]
 
+    # removes all punctuation marks from the text
+    def removing_punctuation_marks(self):
+        punctuation_marks = ["'",",","/",".",":"]
+        for col in range(len(self.df)):
+            text = str(self.df.iloc[col]['Text'])
+            for char in self.df.iloc[col]['Text']:
+                if char in punctuation_marks:
+                    text = text.replace(char, '')
+            self.df.at[col, 'Text'] = text
