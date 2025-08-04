@@ -7,25 +7,19 @@ class DataAnalyzer:
         self.df = pd.read_csv(self.data_url)
         self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{},'common_words':[],'uppercase_words':{}}
 
-    def print_data(self):
-        print(self.df)
-
+    # print the result analyses for tests
     def print_result_dict(self):
         print(self.result_dict)
 
+    # count how much tweets per category and total
     def tweets_count_per_category(self):
-        a = self.df['Biased'].value_counts()
-        print(a.head())
-        print(a.sum())
-
-        self.result_dict['total_tweets']['antisemitic'] = int(a.loc[0])
-        self.result_dict['total_tweets']['non_antisemitic'] = int(a.loc[1])
+        counts = self.df['Biased'].value_counts()
+        self.result_dict['total_tweets']['antisemitic'] = int(counts.loc[0])
+        self.result_dict['total_tweets']['non_antisemitic'] = int(counts.loc[1])
         self.result_dict['total_tweets']['total'] = len(self.df)
-        self.result_dict['total_tweets']['unspecified'] = len(self.df) - int(a.get(0,0)) - int(a.get(1,0))
+        self.result_dict['total_tweets']['unspecified'] = len(self.df) - int(counts.loc[0]) - int(counts.loc[1])
 
-
-
-
+    # calculate the average length of tweets per category and total
     def average_word_tweets_per_category(self):
         antis_words = 0
         count_antis = 0
@@ -50,14 +44,13 @@ class DataAnalyzer:
         self.result_dict['average_length']['non_antisemitic'] = non_antis_words / count_non_antis
         self.result_dict['average_length']['total'] = total_words / count_total
 
+    # find the longest 3 tweets (chars) per category
     def longest_3_tweets_per_category(self):
         antis_tweets = []
         non_antis_tweets = []
-        total_tweets = []
 
         for col in range(len(self.df)):
             row = self.df.iloc[col]
-            total_tweets.append(row['Text'])
             if row['Biased']:
                 antis_tweets.append(row['Text'])
             else:
@@ -65,11 +58,10 @@ class DataAnalyzer:
 
         sorted_antis = sorted(antis_tweets,key=len, reverse=True)
         sorted_non_antis = sorted(non_antis_tweets,key=len, reverse=True)
-        sorted_total_tweets = sorted(total_tweets,key=len, reverse=True)
         self.result_dict['longest_3_tweets']['antisemitic'] = sorted_antis[:3]
         self.result_dict['longest_3_tweets']['non_antisemitic'] = sorted_non_antis[:3]
-        self.result_dict['longest_3_tweets']['total'] = sorted_total_tweets[:3]
 
+    # find the most 10 common words from all tweets
     def common_words(self):
         all_words = ' '.join(self.df['Text']).split()
         most_10 = Counter(all_words).most_common(10)
@@ -77,6 +69,7 @@ class DataAnalyzer:
         for i in most_10:
             self.result_dict['common_words'].append(i[0])
 
+    # count how much upper words per category and total
     def uppercase_words_per_category(self):
         count_antis_upp = 0
         count_non_antis_upp = 0
