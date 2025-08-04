@@ -2,9 +2,8 @@ import pandas as pd
 from collections import Counter
 
 class DataAnalyzer:
-    def __init__(self,data_url):
-        self.data_url = data_url
-        self.df = pd.read_csv(self.data_url)
+    def __init__(self,data_frame):
+        self.df = data_frame
         self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{},'common_words':[],'uppercase_words':{}}
 
     # print the result analyses for tests
