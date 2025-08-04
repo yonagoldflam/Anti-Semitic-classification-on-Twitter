@@ -5,6 +5,9 @@ class Main:
         self.data_url = "../data/tweets_dataset.csv"
         self.manager = Manager(self.data_url)
         self.manager.analyse_data()
+        self.manager.da.print_result_dict()
+        self.manager.cleaning_data()
+
 
 
 if __name__ == "__main__":
