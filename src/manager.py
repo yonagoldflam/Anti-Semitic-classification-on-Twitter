@@ -9,6 +9,9 @@ class Manager:
         self.da.print_result_dict()
         self.da.longest_3_tweets_per_category()
         self.da.print_result_dict()
+        self.da.common_words()
+        print(self.da.result_dict['common_words'])
+
 
 
         #self.dataAnalyzer.print_data()

@@ -1,10 +1,11 @@
 import pandas as pd
+from collections import Counter
 
 class DataAnalyzer:
     def __init__(self,data_url):
         self.data_url = data_url
         self.df = pd.read_csv(self.data_url)
-        self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{}}
+        self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{},'common_words':[]}
 
     def print_data(self):
         print(self.df)
@@ -65,5 +66,15 @@ class DataAnalyzer:
         self.result_dict['longest_3_tweets']['antisemitic'] = sorted_antis[:3]
         self.result_dict['longest_3_tweets']['non_antisemitic'] = sorted_non_antis[:3]
         self.result_dict['longest_3_tweets']['total'] = sorted_total_tweets[:3]
+
+    def common_words(self):
+        all_words = ' '.join(self.df['Text']).split()
+        most_10 = Counter(all_words).most_common(10)
+
+        for i in most_10:
+            self.result_dict['common_words'].append(i[0])
+
+
+
 
 
