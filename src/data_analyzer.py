@@ -8,3 +8,8 @@ class DataAnalyzer:
     def print_data(self):
         print(self.df)
 
+    def tweets_count_per_category(self):
+        return self.df['Biased'].value_counts()
+
+
+
