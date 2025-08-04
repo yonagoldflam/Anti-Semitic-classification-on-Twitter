@@ -5,7 +5,7 @@ class DataAnalyzer:
     def __init__(self,data_url):
         self.data_url = data_url
         self.df = pd.read_csv(self.data_url)
-        self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{},'common_words':[]}
+        self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{},'common_words':[],'uppercase_words':{}}
 
     def print_data(self):
         print(self.df)
@@ -33,6 +33,7 @@ class DataAnalyzer:
         count_non_antis = 0
         total_words = 0
         count_total = 0
+
         for col in range(len(self.df)):
             row = self.df.iloc[col]
             tweet_words = len(str(row['Text']).split())
@@ -53,6 +54,7 @@ class DataAnalyzer:
         antis_tweets = []
         non_antis_tweets = []
         total_tweets = []
+
         for col in range(len(self.df)):
             row = self.df.iloc[col]
             total_tweets.append(row['Text'])
@@ -60,6 +62,7 @@ class DataAnalyzer:
                 antis_tweets.append(row['Text'])
             else:
                 non_antis_tweets.append(row['Text'])
+
         sorted_antis = sorted(antis_tweets,key=len, reverse=True)
         sorted_non_antis = sorted(non_antis_tweets,key=len, reverse=True)
         sorted_total_tweets = sorted(total_tweets,key=len, reverse=True)
@@ -73,6 +76,29 @@ class DataAnalyzer:
 
         for i in most_10:
             self.result_dict['common_words'].append(i[0])
+
+    def uppercase_words_per_category(self):
+        count_antis_upp = 0
+        count_non_antis_upp = 0
+        count_total_upp = 0
+
+        for col in range(len(self.df)):
+            row = self.df.iloc[col]
+            tweet_words = str(row['Text']).split()
+
+            for word in tweet_words:
+                if word.isupper():
+                    count_total_upp += 1
+                    if row['Biased']:
+                        count_antis_upp += 1
+                    else:
+                        count_non_antis_upp += 1
+
+            self.result_dict['uppercase_words']['antisemitic'] = count_antis_upp
+            self.result_dict['uppercase_words']['non_antisemitic'] = count_non_antis_upp
+            self.result_dict['uppercase_words']['total'] = count_total_upp
+
+
 
 
 

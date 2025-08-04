@@ -11,6 +11,8 @@ class Manager:
         self.da.print_result_dict()
         self.da.common_words()
         print(self.da.result_dict['common_words'])
+        self.da.uppercase_words_per_category()
+        print(self.da.result_dict['uppercase_words'])
 
 
 
