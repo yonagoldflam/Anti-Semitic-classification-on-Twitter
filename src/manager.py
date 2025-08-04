@@ -19,6 +19,8 @@ class Manager:
         self.clean_data.save_relevant_columns()
         self.clean_data.removing_punctuation_marks()
         self.clean_data.convert_to_smol_letters()
+        self.clean_data.remove_tweets_without_classify()
+
 
 
 
