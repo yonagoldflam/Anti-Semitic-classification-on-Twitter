@@ -15,3 +15,9 @@ class Cleaner:
                 if char in punctuation_marks:
                     text = text.replace(char, '')
             self.df.at[col, 'Text'] = text
+
+    # convert to smol letters
+    def convert_to_smol_letters(self):
+        for col in range(len(self.df)):
+            text = str(self.df.iloc[col]['Text']).lower()
+            self.df.at[col, 'Text'] = text
