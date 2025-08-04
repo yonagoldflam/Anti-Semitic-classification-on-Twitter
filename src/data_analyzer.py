@@ -4,7 +4,7 @@ class DataAnalyzer:
     def __init__(self,data_url):
         self.data_url = data_url
         self.df = pd.read_csv(self.data_url)
-        self.result_dict = {"total_tweets":{},"average_length":{},}
+        self.result_dict = {"total_tweets":{},"average_length":{},'longest_3_tweets':{}}
 
     def print_data(self):
         print(self.df)
@@ -48,6 +48,22 @@ class DataAnalyzer:
         self.result_dict['average_length']['non_antisemitic'] = non_antis_words / count_non_antis
         self.result_dict['average_length']['total'] = total_words / count_total
 
-
+    def longest_3_tweets_per_category(self):
+        antis_tweets = []
+        non_antis_tweets = []
+        total_tweets = []
+        for col in range(len(self.df)):
+            row = self.df.iloc[col]
+            total_tweets.append(row['Text'])
+            if row['Biased']:
+                antis_tweets.append(row['Text'])
+            else:
+                non_antis_tweets.append(row['Text'])
+        sorted_antis = sorted(antis_tweets,key=len, reverse=True)
+        sorted_non_antis = sorted(non_antis_tweets,key=len, reverse=True)
+        sorted_total_tweets = sorted(total_tweets,key=len, reverse=True)
+        self.result_dict['longest_3_tweets']['antisemitic'] = sorted_antis[:3]
+        self.result_dict['longest_3_tweets']['non_antisemitic'] = sorted_non_antis[:3]
+        self.result_dict['longest_3_tweets']['total'] = sorted_total_tweets[:3]
 
 
