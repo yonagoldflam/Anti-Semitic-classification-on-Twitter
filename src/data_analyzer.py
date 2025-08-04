@@ -25,9 +25,29 @@ class DataAnalyzer:
 
 
 
-    # def average_word_tweets_per_category(self):
-    #     tweet_count_words_per_category = 0
-    #     for col in self.df['Text']:
+    def average_word_tweets_per_category(self):
+        antis_words = 0
+        count_antis = 0
+        non_antis_words = 0
+        count_non_antis = 0
+        total_words = 0
+        count_total = 0
+        for col in range(len(self.df)):
+            row = self.df.iloc[col]
+            tweet_words = len(str(row['Text']).split())
+            total_words += tweet_words
+            count_total += 1
+
+            if row['Biased']:
+                antis_words += tweet_words
+                count_antis += 1
+            else:
+                non_antis_words += tweet_words
+                count_non_antis += 1
+        self.result_dict['average_length']['antisemitic'] = antis_words / count_antis
+        self.result_dict['average_length']['non_antisemitic'] = non_antis_words / count_non_antis
+        self.result_dict['average_length']['total'] = total_words / count_total
+
 
 
 
