@@ -24,11 +24,11 @@ class Manager:
         self.clean_data.convert_to_smol_letters()
         self.clean_data.remove_tweets_without_classify()
 
-    def write_to_json_file(self):
-        self.files.write_to_json_file(self.da.result_dict,)
+    def write_to_json_file(self, anlyzed_data_url):
+        self.files.write_to_json_file(self.da.result_dict,anlyzed_data_url)
 
-    def write_to_csv_file(self):
-        self.files.write_to_csv_file(self.da.result_dict,)
+    def write_to_csv_file(self,cleaned_data_url):
+        self.files.write_to_csv_file(self.da.result_dict,cleaned_data_url)
 
 
 
